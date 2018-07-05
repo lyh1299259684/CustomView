@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--自定义TextView实现验证码效果-->
+    <attr name="titleText" format="string"/>
+    <attr name="titleTextColor" format="color"/>
+    <attr name="titleBackgroundColor" format="color"/>
+    <attr name="titleTextSize" format="dimension"/>
+    <declare-styleable name="CustomTextView">
+        <attr name="titleText"/>
+        <attr name="titleTextColor"/>
+        <attr name="titleTextSize"/>
+        <attr name="titleBackgroundColor"/>
+    </declare-styleable>
+
+    <!--绘制圆形-->
+    <attr name="radius" format="dimension"/>
+    <attr name="circleColor" format="color"/>
+    <declare-styleable name="DrawCircle">
+        <attr name="radius"/>
+        <attr name="circleColor"/>
+    </declare-styleable>
+
+    <!--绘制扇形-->
+    <attr name="leftColor" format="color"/>
+    <attr name="topColor" format="color"/>
+    <attr name="rightColor" format="color"/>
+    <attr name="bottomColor" format="color"/>
+    <attr name="useCenter" format="boolean"/>
+    <declare-styleable name="DrawArc">
+        <attr name="leftColor"/>
+        <attr name="topColor"/>
+        <attr name="rightColor"/>
+        <attr name="bottomColor"/>
+        <attr name="useCenter"/>
+    </declare-styleable>
+
+    <!--绘制Bitmap-->
+    <attr name="src" format="reference"/>
+    <declare-styleable name="DrawBitmap">
+        <attr name="src"/>
+    </declare-styleable>
+
+    <!--绘制文本-->
+    <attr name="text" format="string"/>
+    <attr name="textColor" format="color"/>
+    <attr name="textSize" format="dimension"/>
+    <declare-styleable name="DrawText">
+        <attr name="text"/>
+        <attr name="textColor"/>
+        <attr name="textSize"/>
+    </declare-styleable>
+</resources>
