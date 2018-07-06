@@ -75,6 +75,15 @@
             <com.liyahong.customview.widget.DrawPath
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <com.liyahong.customview.widget.DrawCircleAddColorFilter
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:circleRadius="65dp"
+                app:defaultColor="@color/colorAccent"
+                app:filterColor="@color/colorPrimary"
+                android:background="@android:color/holo_green_dark"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
