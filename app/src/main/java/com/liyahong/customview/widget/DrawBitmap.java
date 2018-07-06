@@ -25,6 +25,7 @@ public class DrawBitmap extends View {
 
     private int resId;
     private Paint mPaint;
+    private Bitmap mBitmap;
 
     public DrawBitmap(Context context) {
         this(context, null);
@@ -48,17 +49,16 @@ public class DrawBitmap extends View {
 
     private void init() {
         mPaint = new Paint();
+        mBitmap = BitmapFactory.decodeResource(getResources(), resId);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        @SuppressLint("DrawAllocation")
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
-        int width = (getWidth() - bitmap.getWidth()) / 2;
-        int height = (getHeight() - bitmap.getHeight()) / 2;
-        canvas.drawBitmap(bitmap, width, height, mPaint);
+        int width = getWidth() / 2 - mBitmap.getWidth() / 2;
+        int height = getHeight() / 2 - mBitmap.getHeight() / 2;
+        canvas.drawBitmap(mBitmap, width, height, mPaint);
     }
 
     @Override
@@ -74,13 +74,13 @@ public class DrawBitmap extends View {
         if (widthMode == MeasureSpec.EXACTLY) { //match_parent or custom
             width = widthSize;
         } else {
-            width = 500;
+            width = getPaddingLeft() + getPaddingRight() + mBitmap.getWidth();
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else {
-            height = 500;
+            height = getPaddingTop() + getPaddingBottom() + mBitmap.getHeight();
         }
 
         //重置尺寸
