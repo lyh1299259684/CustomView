@@ -55,10 +55,10 @@
                 app:useCenter="true"/>
 
             <com.liyahong.customview.widget.DrawBitmap
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:src="@mipmap/love"
+                app:src="@mipmap/linger"
                 android:background="@color/colorAccent"/>
 
             <com.liyahong.customview.widget.DrawText
@@ -84,6 +84,12 @@
                 app:defaultColor="@color/colorAccent"
                 app:filterColor="@color/colorPrimary"
                 android:background="@android:color/holo_green_dark"/>
+
+            <Button
+                android:id="@+id/btn_intent_drawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点击跳转哦"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

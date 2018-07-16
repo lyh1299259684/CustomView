@@ -1,14 +1,18 @@
 package com.liyahong.customview;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.liyahong.customview.widget.CustomTextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private CustomTextView tv_custom;
+    private Button btn_intent_drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         tv_custom = (CustomTextView) findViewById(R.id.tv_custom);
+        btn_intent_drawable = (Button) findViewById(R.id.btn_intent_drawable);
     }
 
     private void bindEvent() {
         tv_custom.setOnTextChangedListener(onTextChangedListener);
+        btn_intent_drawable.setOnClickListener(this);
     }
 
     private void initData() {
@@ -41,5 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMsg(String msg, boolean isLong){
         Toast.makeText(this, msg, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_intent_drawable:
+                startActivity(new Intent(this, LightingActivity.class));
+        }
     }
 }

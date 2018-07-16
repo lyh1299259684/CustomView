@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.liyahong.customview.LightingActivity">
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_hue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="色调"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/iv_image"
+        app:layout_constraintLeft_toLeftOf="@id/iv_image"
+        android:layout_margin="10dp"/>
+
+    <SeekBar
+        android:id="@+id/sb_hue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_hue"
+        app:layout_constraintLeft_toLeftOf="@id/iv_image"
+        app:layout_constraintRight_toRightOf="@id/iv_image"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:id="@+id/tv_saturation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="饱和度"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/sb_hue"
+        app:layout_constraintLeft_toLeftOf="@id/iv_image"
+        android:layout_margin="10dp"/>
+
+    <SeekBar
+        android:id="@+id/sb_saturation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_saturation"
+        app:layout_constraintLeft_toLeftOf="@id/iv_image"
+        app:layout_constraintRight_toRightOf="@id/iv_image"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:id="@+id/tv_scale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="亮度"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/sb_saturation"
+        app:layout_constraintLeft_toLeftOf="@id/iv_image"
+        android:layout_margin="10dp"/>
+
+    <SeekBar
+        android:id="@+id/sb_scale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_scale"
+        app:layout_constraintLeft_toLeftOf="@id/iv_image"
+        app:layout_constraintRight_toRightOf="@id/iv_image"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp" />
+</android.support.constraint.ConstraintLayout>
