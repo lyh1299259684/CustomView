@@ -86,10 +86,16 @@
                 android:background="@android:color/holo_green_dark"/>
 
             <Button
+                android:id="@+id/btn_intent_scrath_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点击去刮奖"/>
+
+            <Button
                 android:id="@+id/btn_intent_drawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="点击跳转哦"/>
+                android:text="点击去处理图片"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

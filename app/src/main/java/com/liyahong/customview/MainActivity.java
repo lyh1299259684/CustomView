@@ -12,7 +12,7 @@ import com.liyahong.customview.widget.CustomTextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private CustomTextView tv_custom;
-    private Button btn_intent_drawable;
+    private Button btn_intent_drawable, btn_intent_scrath_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         tv_custom = (CustomTextView) findViewById(R.id.tv_custom);
         btn_intent_drawable = (Button) findViewById(R.id.btn_intent_drawable);
+        btn_intent_scrath_view = (Button) findViewById(R.id.btn_intent_scrath_view);
     }
 
     private void bindEvent() {
         tv_custom.setOnTextChangedListener(onTextChangedListener);
         btn_intent_drawable.setOnClickListener(this);
+        btn_intent_scrath_view.setOnClickListener(this);
     }
 
     private void initData() {
@@ -54,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_intent_drawable:
                 startActivity(new Intent(this, LightingActivity.class));
+                break;
+            case R.id.btn_intent_scrath_view:
+                startActivity(new Intent(this, ScrathViewActivity.class));
+                break;
         }
     }
 }

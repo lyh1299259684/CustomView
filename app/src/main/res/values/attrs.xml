@@ -61,4 +61,9 @@
         <attr name="filterColor"/>
         <attr name="circleRadius"/>
     </declare-styleable>
+
+    <!--刮刮乐-->
+    <declare-styleable name="ScratchView">
+        <attr name="src"/>
+    </declare-styleable>
 </resources>
