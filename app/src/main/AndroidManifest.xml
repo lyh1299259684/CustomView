@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LightingActivity" />
-        <activity android:name=".ScrathViewActivity"></activity>
+        <activity android:name=".ScrathViewActivity" />
+        <activity android:name=".SketchpadActivity"></activity>
     </application>
 
 </manifest>

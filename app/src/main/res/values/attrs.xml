@@ -66,4 +66,13 @@
     <declare-styleable name="ScratchView">
         <attr name="src"/>
     </declare-styleable>
+
+    <!--自定义画板-->
+    <attr name="paintColor" format="color"/>
+    <attr name="paintStrong" format="dimension"/>
+
+    <declare-styleable name="CustomSketchpad">
+        <attr name="paintColor"/>
+        <attr name="paintStrong"/>
+    </declare-styleable>
 </resources>

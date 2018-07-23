@@ -18,10 +18,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.liyahong.customview.widget.DrawRect
-                android:id="@+id/view_draw_rect"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+            <!--<com.liyahong.customview.widget.DrawRect-->
+                <!--android:id="@+id/view_draw_rect"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"/>-->
 
             <com.liyahong.customview.widget.CustomTextView
                 android:id="@+id/tv_custom"
@@ -35,13 +35,13 @@
                 app:titleTextColor="@android:color/white"
                 app:titleTextSize="40sp" />
 
-            <com.liyahong.customview.widget.DrawCircle
-                android:id="@+id/view_draw_circle"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:radius="50dp"
-                android:layout_marginStart="10dp"
-                app:circleColor="#f1a25d"/>
+            <!--<com.liyahong.customview.widget.DrawCircle-->
+                <!--android:id="@+id/view_draw_circle"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--app:radius="50dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--app:circleColor="#f1a25d"/>-->
 
             <com.liyahong.customview.widget.DrawArc
                 android:layout_width="168dp"
@@ -54,36 +54,36 @@
                 app:topColor="#109af9"
                 app:useCenter="true"/>
 
-            <com.liyahong.customview.widget.DrawBitmap
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:src="@mipmap/linger"
-                android:background="@color/colorAccent"/>
+            <!--<com.liyahong.customview.widget.DrawBitmap-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--app:src="@mipmap/linger"-->
+                <!--android:background="@color/colorAccent"/>-->
 
-            <com.liyahong.customview.widget.DrawText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                app:textSize="24sp"
-                app:textColor="@android:color/white"
-                app:text="玲玲$李先生"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:paddingBottom="3dp"/>
+            <!--<com.liyahong.customview.widget.DrawText-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--app:textSize="24sp"-->
+                <!--app:textColor="@android:color/white"-->
+                <!--app:text="玲玲$李先生"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:paddingBottom="3dp"/>-->
 
-            <com.liyahong.customview.widget.DrawPath
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <!--<com.liyahong.customview.widget.DrawPath-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
 
-            <com.liyahong.customview.widget.DrawCircleAddColorFilter
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:circleRadius="65dp"
-                app:defaultColor="@color/colorAccent"
-                app:filterColor="@color/colorPrimary"
-                android:background="@android:color/holo_green_dark"/>
+            <!--<com.liyahong.customview.widget.DrawCircleAddColorFilter-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="10dp"-->
+                <!--app:circleRadius="65dp"-->
+                <!--app:defaultColor="@color/colorAccent"-->
+                <!--app:filterColor="@color/colorPrimary"-->
+                <!--android:background="@android:color/holo_green_dark"/>-->
 
             <Button
                 android:id="@+id/btn_intent_scrath_view"
@@ -96,6 +96,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="点击去处理图片"/>
+
+            <Button
+                android:id="@+id/btn_intent_sketchpad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点击去签名"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
