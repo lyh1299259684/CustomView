@@ -9,8 +9,10 @@
     tools:context="com.liyahong.customview.ScrathViewActivity">
 
     <com.liyahong.customview.widget.ScratchView
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         app:src="@mipmap/linger"/>
 
     <TextView

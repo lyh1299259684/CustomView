@@ -62,7 +62,7 @@ public class ScratchView extends View {
         mPaint.setStrokeWidth(35);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        dstBitmap = decodeBitmapFormRes(getResources(), resId, getWidth(), 600);
+        dstBitmap = BitmapFactory.decodeResource(getResources(), resId);
         srcBitmap = Bitmap.createBitmap(dstBitmap.getWidth(), dstBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
         mCanvas = new Canvas(srcBitmap);
@@ -113,49 +113,49 @@ public class ScratchView extends View {
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         } else {
-            width = 300;
+            width = 450;
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else {
-            height = 300;
+            height = 450;
         }
 
         setMeasuredDimension(width, height);
     }
 
-    /**
-     * 缩放图片
-     * @return bitmap
-     */
-    private Bitmap decodeBitmapFormRes(Resources resources, int resId, int targetWidth, int targetHeight){
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
-        options.inJustDecodeBounds = false;
-        options.inSampleSize = calculateInSample(options, targetWidth, targetHeight);
-        return BitmapFactory.decodeResource(resources, resId, options);
-    }
-
-    private int calculateInSample(BitmapFactory.Options options, int targetWidth, int targetHeight){
-        if (targetWidth <= 0 || targetHeight <= 0) {
-            return 1;
-        }
-
-        int sample = 1;
-
-        final int rawWidth = options.outWidth;
-        final int rawHeight = options.outHeight;
-
-        if (rawWidth > targetWidth || rawHeight > targetHeight) {
-            final int halfWidth = rawWidth / 2;
-            final int halfHeight = rawHeight / 2;
-
-            while ((halfWidth / sample >= targetWidth) && (halfHeight / sample >= targetHeight)) {
-                sample *= 2;
-            }
-        }
-
-        return sample;
-    }
+//    /**
+//     * 缩放图片
+//     * @return bitmap
+//     */
+//    private Bitmap decodeBitmapFormRes(Resources resources, int resId, int targetWidth, int targetHeight){
+//        final BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inPreferredConfig = Bitmap.Config.RGB_565;
+//        options.inJustDecodeBounds = false;
+//        options.inSampleSize = calculateInSample(options, targetWidth, targetHeight);
+//        return BitmapFactory.decodeResource(resources, resId, options);
+//    }
+//
+//    private int calculateInSample(BitmapFactory.Options options, int targetWidth, int targetHeight){
+//        if (targetWidth <= 0 || targetHeight <= 0) {
+//            return 1;
+//        }
+//
+//        int sample = 1;
+//
+//        final int rawWidth = options.outWidth;
+//        final int rawHeight = options.outHeight;
+//
+//        if (rawWidth > targetWidth || rawHeight > targetHeight) {
+//            final int halfWidth = rawWidth / 2;
+//            final int halfHeight = rawHeight / 2;
+//
+//            while ((halfWidth / sample >= targetWidth) && (halfHeight / sample >= targetHeight)) {
+//                sample *= 2;
+//            }
+//        }
+//
+//        return sample;
+//    }
 }
