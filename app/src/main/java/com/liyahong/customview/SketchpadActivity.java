@@ -1,6 +1,6 @@
 package com.liyahong.customview;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.liyahong.customview.uitls.DrawableUtils;
+import com.liyahong.customview.adapter.PaintColorAndSketchpadColorAdapter;
+import com.liyahong.customview.adapter.PaintStrongAdapter;
+import com.liyahong.customview.bean.ColorBean;
+import com.liyahong.customview.bean.StrongBean;
+import com.liyahong.customview.interfaces.OnItemClickListener;
 import com.liyahong.customview.widget.CustomSketchpad;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SketchpadActivity extends AppCompatActivity implements View.OnClickListener{
@@ -21,6 +25,12 @@ public class SketchpadActivity extends AppCompatActivity implements View.OnClick
     private CustomSketchpad sketchpad;
     private TextView tv_eraser, tv_reset;
     private RecyclerView rv_sketchpad_color, rv_paint_color, rv_paint_strong;
+
+    private List<ColorBean> colorList;
+    private List<ColorBean> sketchpadColorList;
+    private List<StrongBean> strongList;
+    private PaintColorAndSketchpadColorAdapter paintColorAdapter, sketchpadColorAdapter;
+    private PaintStrongAdapter strongAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,168 +64,417 @@ public class SketchpadActivity extends AppCompatActivity implements View.OnClick
         rv_paint_color.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rv_paint_strong.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rv_sketchpad_color.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        initPaintColor();
+        initSketchpadColor();
+        initStrong();
+
+        //反转集合
+        Collections.reverse(sketchpadColorList);
+
+        //初始化数据
+        sketchpad.setBackgroundColor(Color.parseColor(sketchpadColorList.get(0).getColor()));
+        sketchpad.setPaintColor(colorList.get(0).getColor());
+        sketchpad.setPaintStrong(strongList.get(0).getStrong());
+
+        refreshPaintColorAdapter(colorList);
+        refreshSketchpadColorAdapter(sketchpadColorList);
+        refreshPaintStrongAdapter(strongList);
     }
 
-    private List<String> initColor(){
-        List<String> colors = new ArrayList<>();
-
-        colors.add("#FFB6C1");
-        colors.add("#FFC0CB");
-        colors.add("#DC143C");
-        colors.add("#FFF0F5");
-        colors.add("#DB7093");
-        colors.add("#FF69B4");
-        colors.add("#FF1493");
-        colors.add("#C71585");
-        colors.add("#DA70D6");
-        colors.add("#D8BFD8");
-        colors.add("#DDA0DD");
-        colors.add("#EE82EE");
-        colors.add("#FF00FF");
-        colors.add("#8B008B");
-        colors.add("#800080");
-        colors.add("#BA55D3");
-        colors.add("#9400D3");
-        colors.add("#9932CC");
-        colors.add("#4B0082");
-        colors.add("#8A2BE2");
-        colors.add("#9370DB");
-        colors.add("#7B68EE");
-        colors.add("#6A5ACD");
-        colors.add("#483D8B");
-        colors.add("#E6E6FA");
-        colors.add("#F8F8FF");
-        colors.add("#0000FF");
-        colors.add("#0000CD");
-        colors.add("#191970");
-        colors.add("#00008B");
-        colors.add("#000080");
-        colors.add("#4169E1");
-        colors.add("#6495ED");
-        colors.add("#B0C4DE");
-        colors.add("#778899");
-        colors.add("#708090");
-        colors.add("#1E90FF");
-        colors.add("#F0F8FF");
-        colors.add("#4682B4");
-        colors.add("#87CEFA");
-        colors.add("#87CEEB");
-        colors.add("#00BFFF");
-        colors.add("#ADD8E6");
-        colors.add("#B0E0E6");
-        colors.add("#5F9EA0");
-        colors.add("#F0FFFF");
-        colors.add("#40E0D0");
-        colors.add("#AFEEEE");
-        colors.add("#2F4F4F");
-        colors.add("#00FFFF");
-        colors.add("#008B8B");
-        colors.add("#008080");
-        colors.add("#48D1CC");
-        colors.add("#20B2AA");
-        colors.add("#7FFFD4");
-        colors.add("#66CDAA");
-        colors.add("#00FA9A");
-        colors.add("#F5FFFA");
-        colors.add("#00FF7F");
-        colors.add("#3CB371");
-        colors.add("#2E8B57");
-        colors.add("#90EE90");
-        colors.add("#98FB98");
-        colors.add("#F0FFF0");
-        colors.add("#8FBC8F");
-        colors.add("#32CD32");
-        colors.add("#00FF00");
-        colors.add("#228B22");
-        colors.add("#008000");
-        colors.add("#006400");
-        colors.add("#7FFF00");
-        colors.add("#7CFC00");
-        colors.add("#ADFF2F");
-        colors.add("#556B2F");
-        colors.add("#9ACD32");
-        colors.add("#6B8E23");
-        colors.add("#F5F5DC");
-        colors.add("#FAFAD2");
-        colors.add("#FFFFF0");
-        colors.add("#FFFFE0");
-        colors.add("#FFFF00");
-        colors.add("#808000");
-        colors.add("#BDB76B");
-        colors.add("#FFFACD");
-        colors.add("#EEE8AA");
-        colors.add("#F0E68C");
-        colors.add("#FFD700");
-        colors.add("#FFF8DC");
-        colors.add("#DAA520");
-        colors.add("#B8860B");
-        colors.add("#FFFAF0");
-        colors.add("#FDF5E6");
-        colors.add("#F5DEB3");
-        colors.add("#FFE4B5");
-        colors.add("#FFA500");
-        colors.add("#FFEFD5");
-        colors.add("#FFEBCD");
-        colors.add("#FFDEAD");
-        colors.add("#FAEBD7");
-        colors.add("#D2B48C");
-        colors.add("#DEB887");
-        colors.add("#FFE4C4");
-        colors.add("#FF8C00");
-        colors.add("#FAF0E6");
-        colors.add("#CD853F");
-        colors.add("#FFDAB9");
-        colors.add("#F4A460");
-        colors.add("#D2691E");
-        colors.add("#8B4513");
-        colors.add("#FFF5EE");
-        colors.add("#A0522D");
-        colors.add("#FFA07A");
-        colors.add("#FF7F50");
-        colors.add("#FF4500");
-        colors.add("#E9967A");
-        colors.add("#FF6347");
-        colors.add("#FFE4E1");
-        colors.add("#FA8072");
-        colors.add("#FFFAFA");
-        colors.add("#F08080");
-        colors.add("#BC8F8F");
-        colors.add("#CD5C5C");
-        colors.add("#FF0000");
-        colors.add("#A52A2A");
-        colors.add("#B22222");
-        colors.add("#8B0000");
-        colors.add("#FFFFFF");
-        colors.add("#F5F5F5");
-        colors.add("#DCDCDC");
-        colors.add("#D3D3D3");
-        colors.add("#C0C0C0");
-        colors.add("#A9A9A9");
-        colors.add("#808080");
-        colors.add("#696969");
-        colors.add("#000000");
-
-        return colors;
+    /**
+     * 画笔颜色适配器
+     * @param datas
+     */
+    private void refreshPaintColorAdapter(List<ColorBean> datas){
+        if (paintColorAdapter == null) {
+            paintColorAdapter = new PaintColorAndSketchpadColorAdapter(datas, this, 1);
+            paintColorAdapter.setOnItemClickListener(mOnItemClick);
+            rv_paint_color.setAdapter(paintColorAdapter);
+        } else {
+            paintColorAdapter.refreshAdapter(datas);
+        }
     }
 
-    private List<Integer> initStrong(){
-        List<Integer> strongs = new ArrayList<>();
+    /**
+     * 画板颜色适配器
+     * @param datas
+     */
+    private void refreshSketchpadColorAdapter(List<ColorBean> datas){
+        if (sketchpadColorAdapter == null) {
+            sketchpadColorAdapter = new PaintColorAndSketchpadColorAdapter(datas, this, 2);
+            sketchpadColorAdapter.setOnItemClickListener(mOnItemClick);
+            rv_sketchpad_color.setAdapter(sketchpadColorAdapter);
+        } else {
+            sketchpadColorAdapter.refreshAdapter(datas);
+        }
+    }
 
-        strongs.add(3);
-        strongs.add(6);
-        strongs.add(9);
-        strongs.add(12);
+    /**
+     * 字体粗细适配器
+     * @param datas
+     */
+    private void refreshPaintStrongAdapter(List<StrongBean> datas){
+        if (strongAdapter == null) {
+            strongAdapter = new PaintStrongAdapter(datas, this);
+            strongAdapter.setOnItemClickListener(mOnItemClick);
+            rv_paint_strong.setAdapter(strongAdapter);
+        } else {
+            strongAdapter.refreshAdapter(datas);
+        }
+    }
 
-        return strongs;
+    /**
+     * 子条目点击
+     */
+    private OnItemClickListener mOnItemClick = new OnItemClickListener() {
+        @Override
+        public void OnItemClick(int position, int action) {
+            switch (action) {
+                case 1:     //画笔颜色
+                    ColorBean colorBean = colorList.get(position);
+                    for (int i = 0; i < colorList.size(); i++) {
+                        if (position == i) {
+                            colorList.get(i).setSelected(true);
+                        } else {
+                            colorList.get(i).setSelected(false);
+                        }
+                    }
+                    refreshPaintColorAdapter(colorList);
+                    sketchpad.setPaintColor(colorBean.getColor());
+                    break;
+                case 2:     //画板颜色
+                    ColorBean sketchpadColor = sketchpadColorList.get(position);
+                    for (int i = 0; i < sketchpadColorList.size(); i++) {
+                        if (position == i) {
+                            sketchpadColorList.get(i).setSelected(true);
+                        } else {
+                            sketchpadColorList.get(i).setSelected(false);
+                        }
+                    }
+                    refreshSketchpadColorAdapter(sketchpadColorList);
+                    sketchpad.setBackgroundColor(Color.parseColor(sketchpadColor.getColor()));
+                    break;
+                case 3:     //画笔粗细
+                    StrongBean strongBean = strongList.get(position);
+                    for (int i = 0; i < strongList.size(); i++) {
+                        if (position == i) {
+                            strongList.get(i).setSelected(true);
+                        } else {
+                            strongList.get(i).setSelected(false);
+                        }
+                    }
+                    refreshPaintStrongAdapter(strongList);
+                    sketchpad.setPaintStrong(strongBean.getStrong());
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 初始化画笔颜色
+     */
+    private void initPaintColor(){
+        colorList = new ArrayList<>();
+        colorList.add(new ColorBean("#FFB6C1").setSelected(true));
+        colorList.add(new ColorBean("#FFC0CB"));
+        colorList.add(new ColorBean("#DC143C"));
+        colorList.add(new ColorBean("#FFF0F5"));
+        colorList.add(new ColorBean("#DB7093"));
+        colorList.add(new ColorBean("#FF69B4"));
+        colorList.add(new ColorBean("#FF1493"));
+        colorList.add(new ColorBean("#C71585"));
+        colorList.add(new ColorBean("#DA70D6"));
+        colorList.add(new ColorBean("#D8BFD8"));
+        colorList.add(new ColorBean("#DDA0DD"));
+        colorList.add(new ColorBean("#EE82EE"));
+        colorList.add(new ColorBean("#FF00FF"));
+        colorList.add(new ColorBean("#8B008B"));
+        colorList.add(new ColorBean("#800080"));
+        colorList.add(new ColorBean("#BA55D3"));
+        colorList.add(new ColorBean("#9400D3"));
+        colorList.add(new ColorBean("#9932CC"));
+        colorList.add(new ColorBean("#4B0082"));
+        colorList.add(new ColorBean("#8A2BE2"));
+        colorList.add(new ColorBean("#9370DB"));
+        colorList.add(new ColorBean("#7B68EE"));
+        colorList.add(new ColorBean("#6A5ACD"));
+        colorList.add(new ColorBean("#483D8B"));
+        colorList.add(new ColorBean("#E6E6FA"));
+        colorList.add(new ColorBean("#F8F8FF"));
+        colorList.add(new ColorBean("#0000FF"));
+        colorList.add(new ColorBean("#0000CD"));
+        colorList.add(new ColorBean("#191970"));
+        colorList.add(new ColorBean("#00008B"));
+        colorList.add(new ColorBean("#000080"));
+        colorList.add(new ColorBean("#4169E1"));
+        colorList.add(new ColorBean("#6495ED"));
+        colorList.add(new ColorBean("#B0C4DE"));
+        colorList.add(new ColorBean("#778899"));
+        colorList.add(new ColorBean("#708090"));
+        colorList.add(new ColorBean("#1E90FF"));
+        colorList.add(new ColorBean("#F0F8FF"));
+        colorList.add(new ColorBean("#4682B4"));
+        colorList.add(new ColorBean("#87CEFA"));
+        colorList.add(new ColorBean("#87CEEB"));
+        colorList.add(new ColorBean("#00BFFF"));
+        colorList.add(new ColorBean("#ADD8E6"));
+        colorList.add(new ColorBean("#B0E0E6"));
+        colorList.add(new ColorBean("#5F9EA0"));
+        colorList.add(new ColorBean("#F0FFFF"));
+        colorList.add(new ColorBean("#40E0D0"));
+        colorList.add(new ColorBean("#AFEEEE"));
+        colorList.add(new ColorBean("#2F4F4F"));
+        colorList.add(new ColorBean("#00FFFF"));
+        colorList.add(new ColorBean("#008B8B"));
+        colorList.add(new ColorBean("#008080"));
+        colorList.add(new ColorBean("#48D1CC"));
+        colorList.add(new ColorBean("#20B2AA"));
+        colorList.add(new ColorBean("#7FFFD4"));
+        colorList.add(new ColorBean("#66CDAA"));
+        colorList.add(new ColorBean("#00FA9A"));
+        colorList.add(new ColorBean("#F5FFFA"));
+        colorList.add(new ColorBean("#00FF7F"));
+        colorList.add(new ColorBean("#3CB371"));
+        colorList.add(new ColorBean("#2E8B57"));
+        colorList.add(new ColorBean("#90EE90"));
+        colorList.add(new ColorBean("#98FB98"));
+        colorList.add(new ColorBean("#F0FFF0"));
+        colorList.add(new ColorBean("#8FBC8F"));
+        colorList.add(new ColorBean("#32CD32"));
+        colorList.add(new ColorBean("#00FF00"));
+        colorList.add(new ColorBean("#228B22"));
+        colorList.add(new ColorBean("#008000"));
+        colorList.add(new ColorBean("#006400"));
+        colorList.add(new ColorBean("#7FFF00"));
+        colorList.add(new ColorBean("#7CFC00"));
+        colorList.add(new ColorBean("#ADFF2F"));
+        colorList.add(new ColorBean("#556B2F"));
+        colorList.add(new ColorBean("#9ACD32"));
+        colorList.add(new ColorBean("#6B8E23"));
+        colorList.add(new ColorBean("#F5F5DC"));
+        colorList.add(new ColorBean("#FAFAD2"));
+        colorList.add(new ColorBean("#FFFFF0"));
+        colorList.add(new ColorBean("#FFFFE0"));
+        colorList.add(new ColorBean("#FFFF00"));
+        colorList.add(new ColorBean("#808000"));
+        colorList.add(new ColorBean("#BDB76B"));
+        colorList.add(new ColorBean("#FFFACD"));
+        colorList.add(new ColorBean("#EEE8AA"));
+        colorList.add(new ColorBean("#F0E68C"));
+        colorList.add(new ColorBean("#FFD700"));
+        colorList.add(new ColorBean("#FFF8DC"));
+        colorList.add(new ColorBean("#DAA520"));
+        colorList.add(new ColorBean("#B8860B"));
+        colorList.add(new ColorBean("#FFFAF0"));
+        colorList.add(new ColorBean("#FDF5E6"));
+        colorList.add(new ColorBean("#F5DEB3"));
+        colorList.add(new ColorBean("#FFE4B5"));
+        colorList.add(new ColorBean("#FFA500"));
+        colorList.add(new ColorBean("#FFEFD5"));
+        colorList.add(new ColorBean("#FFEBCD"));
+        colorList.add(new ColorBean("#FFDEAD"));
+        colorList.add(new ColorBean("#FAEBD7"));
+        colorList.add(new ColorBean("#D2B48C"));
+        colorList.add(new ColorBean("#DEB887"));
+        colorList.add(new ColorBean("#FFE4C4"));
+        colorList.add(new ColorBean("#FF8C00"));
+        colorList.add(new ColorBean("#FAF0E6"));
+        colorList.add(new ColorBean("#CD853F"));
+        colorList.add(new ColorBean("#FFDAB9"));
+        colorList.add(new ColorBean("#F4A460"));
+        colorList.add(new ColorBean("#D2691E"));
+        colorList.add(new ColorBean("#8B4513"));
+        colorList.add(new ColorBean("#FFF5EE"));
+        colorList.add(new ColorBean("#A0522D"));
+        colorList.add(new ColorBean("#FFA07A"));
+        colorList.add(new ColorBean("#FF7F50"));
+        colorList.add(new ColorBean("#FF4500"));
+        colorList.add(new ColorBean("#E9967A"));
+        colorList.add(new ColorBean("#FF6347"));
+        colorList.add(new ColorBean("#FFE4E1"));
+        colorList.add(new ColorBean("#FA8072"));
+        colorList.add(new ColorBean("#FFFAFA"));
+        colorList.add(new ColorBean("#F08080"));
+        colorList.add(new ColorBean("#BC8F8F"));
+        colorList.add(new ColorBean("#CD5C5C"));
+        colorList.add(new ColorBean("#FF0000"));
+        colorList.add(new ColorBean("#A52A2A"));
+        colorList.add(new ColorBean("#B22222"));
+        colorList.add(new ColorBean("#8B0000"));
+        colorList.add(new ColorBean("#FFFFFF"));
+        colorList.add(new ColorBean("#F5F5F5"));
+        colorList.add(new ColorBean("#DCDCDC"));
+        colorList.add(new ColorBean("#D3D3D3"));
+        colorList.add(new ColorBean("#C0C0C0"));
+        colorList.add(new ColorBean("#A9A9A9"));
+        colorList.add(new ColorBean("#808080"));
+        colorList.add(new ColorBean("#696969"));
+        colorList.add(new ColorBean("#000000"));
+    }
+
+    /**
+     * 初始化画板颜色
+     */
+    private void initSketchpadColor(){
+        sketchpadColorList = new ArrayList<>();
+
+        sketchpadColorList.add(new ColorBean("#FFB6C1"));
+        sketchpadColorList.add(new ColorBean("#FFC0CB"));
+        sketchpadColorList.add(new ColorBean("#DC143C"));
+        sketchpadColorList.add(new ColorBean("#FFF0F5"));
+        sketchpadColorList.add(new ColorBean("#DB7093"));
+        sketchpadColorList.add(new ColorBean("#FF69B4"));
+        sketchpadColorList.add(new ColorBean("#FF1493"));
+        sketchpadColorList.add(new ColorBean("#C71585"));
+        sketchpadColorList.add(new ColorBean("#DA70D6"));
+        sketchpadColorList.add(new ColorBean("#D8BFD8"));
+        sketchpadColorList.add(new ColorBean("#DDA0DD"));
+        sketchpadColorList.add(new ColorBean("#EE82EE"));
+        sketchpadColorList.add(new ColorBean("#FF00FF"));
+        sketchpadColorList.add(new ColorBean("#8B008B"));
+        sketchpadColorList.add(new ColorBean("#800080"));
+        sketchpadColorList.add(new ColorBean("#BA55D3"));
+        sketchpadColorList.add(new ColorBean("#9400D3"));
+        sketchpadColorList.add(new ColorBean("#9932CC"));
+        sketchpadColorList.add(new ColorBean("#4B0082"));
+        sketchpadColorList.add(new ColorBean("#8A2BE2"));
+        sketchpadColorList.add(new ColorBean("#9370DB"));
+        sketchpadColorList.add(new ColorBean("#7B68EE"));
+        sketchpadColorList.add(new ColorBean("#6A5ACD"));
+        sketchpadColorList.add(new ColorBean("#483D8B"));
+        sketchpadColorList.add(new ColorBean("#E6E6FA"));
+        sketchpadColorList.add(new ColorBean("#F8F8FF"));
+        sketchpadColorList.add(new ColorBean("#0000FF"));
+        sketchpadColorList.add(new ColorBean("#0000CD"));
+        sketchpadColorList.add(new ColorBean("#191970"));
+        sketchpadColorList.add(new ColorBean("#00008B"));
+        sketchpadColorList.add(new ColorBean("#000080"));
+        sketchpadColorList.add(new ColorBean("#4169E1"));
+        sketchpadColorList.add(new ColorBean("#6495ED"));
+        sketchpadColorList.add(new ColorBean("#B0C4DE"));
+        sketchpadColorList.add(new ColorBean("#778899"));
+        sketchpadColorList.add(new ColorBean("#708090"));
+        sketchpadColorList.add(new ColorBean("#1E90FF"));
+        sketchpadColorList.add(new ColorBean("#F0F8FF"));
+        sketchpadColorList.add(new ColorBean("#4682B4"));
+        sketchpadColorList.add(new ColorBean("#87CEFA"));
+        sketchpadColorList.add(new ColorBean("#87CEEB"));
+        sketchpadColorList.add(new ColorBean("#00BFFF"));
+        sketchpadColorList.add(new ColorBean("#ADD8E6"));
+        sketchpadColorList.add(new ColorBean("#B0E0E6"));
+        sketchpadColorList.add(new ColorBean("#5F9EA0"));
+        sketchpadColorList.add(new ColorBean("#F0FFFF"));
+        sketchpadColorList.add(new ColorBean("#40E0D0"));
+        sketchpadColorList.add(new ColorBean("#AFEEEE"));
+        sketchpadColorList.add(new ColorBean("#2F4F4F"));
+        sketchpadColorList.add(new ColorBean("#00FFFF"));
+        sketchpadColorList.add(new ColorBean("#008B8B"));
+        sketchpadColorList.add(new ColorBean("#008080"));
+        sketchpadColorList.add(new ColorBean("#48D1CC"));
+        sketchpadColorList.add(new ColorBean("#20B2AA"));
+        sketchpadColorList.add(new ColorBean("#7FFFD4"));
+        sketchpadColorList.add(new ColorBean("#66CDAA"));
+        sketchpadColorList.add(new ColorBean("#00FA9A"));
+        sketchpadColorList.add(new ColorBean("#F5FFFA"));
+        sketchpadColorList.add(new ColorBean("#00FF7F"));
+        sketchpadColorList.add(new ColorBean("#3CB371"));
+        sketchpadColorList.add(new ColorBean("#2E8B57"));
+        sketchpadColorList.add(new ColorBean("#90EE90"));
+        sketchpadColorList.add(new ColorBean("#98FB98"));
+        sketchpadColorList.add(new ColorBean("#F0FFF0"));
+        sketchpadColorList.add(new ColorBean("#8FBC8F"));
+        sketchpadColorList.add(new ColorBean("#32CD32"));
+        sketchpadColorList.add(new ColorBean("#00FF00"));
+        sketchpadColorList.add(new ColorBean("#228B22"));
+        sketchpadColorList.add(new ColorBean("#008000"));
+        sketchpadColorList.add(new ColorBean("#006400"));
+        sketchpadColorList.add(new ColorBean("#7FFF00"));
+        sketchpadColorList.add(new ColorBean("#7CFC00"));
+        sketchpadColorList.add(new ColorBean("#ADFF2F"));
+        sketchpadColorList.add(new ColorBean("#556B2F"));
+        sketchpadColorList.add(new ColorBean("#9ACD32"));
+        sketchpadColorList.add(new ColorBean("#6B8E23"));
+        sketchpadColorList.add(new ColorBean("#F5F5DC"));
+        sketchpadColorList.add(new ColorBean("#FAFAD2"));
+        sketchpadColorList.add(new ColorBean("#FFFFF0"));
+        sketchpadColorList.add(new ColorBean("#FFFFE0"));
+        sketchpadColorList.add(new ColorBean("#FFFF00"));
+        sketchpadColorList.add(new ColorBean("#808000"));
+        sketchpadColorList.add(new ColorBean("#BDB76B"));
+        sketchpadColorList.add(new ColorBean("#FFFACD"));
+        sketchpadColorList.add(new ColorBean("#EEE8AA"));
+        sketchpadColorList.add(new ColorBean("#F0E68C"));
+        sketchpadColorList.add(new ColorBean("#FFD700"));
+        sketchpadColorList.add(new ColorBean("#FFF8DC"));
+        sketchpadColorList.add(new ColorBean("#DAA520"));
+        sketchpadColorList.add(new ColorBean("#B8860B"));
+        sketchpadColorList.add(new ColorBean("#FFFAF0"));
+        sketchpadColorList.add(new ColorBean("#FDF5E6"));
+        sketchpadColorList.add(new ColorBean("#F5DEB3"));
+        sketchpadColorList.add(new ColorBean("#FFE4B5"));
+        sketchpadColorList.add(new ColorBean("#FFA500"));
+        sketchpadColorList.add(new ColorBean("#FFEFD5"));
+        sketchpadColorList.add(new ColorBean("#FFEBCD"));
+        sketchpadColorList.add(new ColorBean("#FFDEAD"));
+        sketchpadColorList.add(new ColorBean("#FAEBD7"));
+        sketchpadColorList.add(new ColorBean("#D2B48C"));
+        sketchpadColorList.add(new ColorBean("#DEB887"));
+        sketchpadColorList.add(new ColorBean("#FFE4C4"));
+        sketchpadColorList.add(new ColorBean("#FF8C00"));
+        sketchpadColorList.add(new ColorBean("#FAF0E6"));
+        sketchpadColorList.add(new ColorBean("#CD853F"));
+        sketchpadColorList.add(new ColorBean("#FFDAB9"));
+        sketchpadColorList.add(new ColorBean("#F4A460"));
+        sketchpadColorList.add(new ColorBean("#D2691E"));
+        sketchpadColorList.add(new ColorBean("#8B4513"));
+        sketchpadColorList.add(new ColorBean("#FFF5EE"));
+        sketchpadColorList.add(new ColorBean("#A0522D"));
+        sketchpadColorList.add(new ColorBean("#FFA07A"));
+        sketchpadColorList.add(new ColorBean("#FF7F50"));
+        sketchpadColorList.add(new ColorBean("#FF4500"));
+        sketchpadColorList.add(new ColorBean("#E9967A"));
+        sketchpadColorList.add(new ColorBean("#FF6347"));
+        sketchpadColorList.add(new ColorBean("#FFE4E1"));
+        sketchpadColorList.add(new ColorBean("#FA8072"));
+        sketchpadColorList.add(new ColorBean("#FFFAFA"));
+        sketchpadColorList.add(new ColorBean("#F08080"));
+        sketchpadColorList.add(new ColorBean("#BC8F8F"));
+        sketchpadColorList.add(new ColorBean("#CD5C5C"));
+        sketchpadColorList.add(new ColorBean("#FF0000"));
+        sketchpadColorList.add(new ColorBean("#A52A2A"));
+        sketchpadColorList.add(new ColorBean("#B22222"));
+        sketchpadColorList.add(new ColorBean("#8B0000"));
+        sketchpadColorList.add(new ColorBean("#FFFFFF"));
+        sketchpadColorList.add(new ColorBean("#F5F5F5"));
+        sketchpadColorList.add(new ColorBean("#DCDCDC"));
+        sketchpadColorList.add(new ColorBean("#D3D3D3"));
+        sketchpadColorList.add(new ColorBean("#C0C0C0"));
+        sketchpadColorList.add(new ColorBean("#A9A9A9"));
+        sketchpadColorList.add(new ColorBean("#808080"));
+        sketchpadColorList.add(new ColorBean("#696969"));
+        sketchpadColorList.add(new ColorBean("#000000").setSelected(true));
+    }
+
+    /**
+     * 初始化字体粗细
+     */
+    private void initStrong(){
+        strongList = new ArrayList<>();
+
+        strongList.add(new StrongBean(3, R.mipmap.paint_strong_12).setSelected(true));
+        strongList.add(new StrongBean(6, R.mipmap.paint_strong_20));
+        strongList.add(new StrongBean(9, R.mipmap.paint_strong_28));
+        strongList.add(new StrongBean(12, R.mipmap.paint_strong_36));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_eraser:  //橡皮擦 or 画板切换
-                showMsg("正在开发中...");
+            case R.id.tv_eraser:  //撤销
+                showMsg("正在努力开发中...");
                 break;
-            case R.id.tv_reset:
+            case R.id.tv_reset:   //重置
                 sketchpad.clearCanvas();
                 break;
         }
@@ -223,5 +482,22 @@ public class SketchpadActivity extends AppCompatActivity implements View.OnClick
 
     private void showMsg(String msg){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (colorList != null) {
+            colorList.clear();
+            colorList = null;
+        }
+        if (sketchpadColorList != null) {
+            sketchpadColorList.clear();
+            sketchpadColorList = null;
+        }
+        if (strongList != null) {
+            strongList.clear();
+            strongList = null;
+        }
     }
 }

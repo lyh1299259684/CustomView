@@ -16,6 +16,9 @@ import android.view.View;
 
 import com.liyahong.customview.R;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * author: LiYaHong
  * email: happyboy183@163.com
@@ -26,11 +29,11 @@ import com.liyahong.customview.R;
 
 public class CustomSketchpad extends View {
 
-    private Paint mPaint;     //签名画笔
-    private Path mPath;       //绘制路径
+    private Paint mPaint;                    //签名画笔
+    private Path mPath;                      //绘制路径
 
-    private int mPaintColor; //画笔颜色
-    private int mPaintStrong;//画笔粗细
+    private int mPaintColor;                //画笔颜色
+    private int mPaintStrong;               //画笔粗细
 
     public CustomSketchpad(Context context) {
         this(context, null);
@@ -65,6 +68,7 @@ public class CustomSketchpad extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        canvas.save();
         canvas.drawPath(mPath, mPaint);
     }
 
@@ -140,16 +144,6 @@ public class CustomSketchpad extends View {
      */
     public void clearCanvas(){
         mPath.reset();
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        invalidate();
-        resetCanvas();
-    }
-
-    /**
-     * 还原画布为初始状态
-     */
-    public void resetCanvas(){
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         invalidate();
     }
 }
