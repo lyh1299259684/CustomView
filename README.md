@@ -11,3 +11,6 @@
 
 ### CustomTextView
 ![image](https://github.com/lyh1299259684/CustomView/blob/master/app/src/main/assets/Gif/VerificationCode.gif)
+
+
+## 不断学习中,持续更新ing...
