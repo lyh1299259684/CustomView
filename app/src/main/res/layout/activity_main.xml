@@ -43,16 +43,16 @@
                 <!--android:layout_marginStart="10dp"-->
                 <!--app:circleColor="#f1a25d"/>-->
 
-            <com.liyahong.customview.widget.DrawArc
-                android:layout_width="168dp"
-                android:layout_height="168dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                app:leftColor="#de4916"
-                app:bottomColor="#fbb640"
-                app:rightColor="#1136b6"
-                app:topColor="#109af9"
-                app:useCenter="true"/>
+            <!--<com.liyahong.customview.widget.DrawArc-->
+                <!--android:layout_width="168dp"-->
+                <!--android:layout_height="168dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--app:leftColor="#de4916"-->
+                <!--app:bottomColor="#fbb640"-->
+                <!--app:rightColor="#1136b6"-->
+                <!--app:topColor="#109af9"-->
+                <!--app:useCenter="true"/>-->
 
             <!--<com.liyahong.customview.widget.DrawBitmap-->
                 <!--android:layout_width="match_parent"-->
