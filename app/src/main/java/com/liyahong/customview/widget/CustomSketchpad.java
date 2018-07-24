@@ -2,6 +2,7 @@ package com.liyahong.customview.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -145,5 +146,17 @@ public class CustomSketchpad extends View {
     public void clearCanvas(){
         mPath.reset();
         invalidate();
+    }
+
+    /**
+     * 获取图片
+     * @return
+     */
+    public Bitmap getBitmap(){
+        setDrawingCacheEnabled(true);
+        buildDrawingCache();                                    //启用DrawingCache并创建位图
+        Bitmap bitmap = Bitmap.createBitmap(getDrawingCache()); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
+        setDrawingCacheEnabled(false);                         //禁用DrawingCache否则会影响性能 \
+        return bitmap;
     }
 }

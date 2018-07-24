@@ -1,6 +1,14 @@
 package com.liyahong.customview;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +23,13 @@ import com.liyahong.customview.adapter.PaintStrongAdapter;
 import com.liyahong.customview.bean.ColorBean;
 import com.liyahong.customview.bean.StrongBean;
 import com.liyahong.customview.interfaces.OnItemClickListener;
+import com.liyahong.customview.uitls.SDCardPathUtils;
 import com.liyahong.customview.widget.CustomSketchpad;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +37,7 @@ import java.util.List;
 public class SketchpadActivity extends AppCompatActivity implements View.OnClickListener{
 
     private CustomSketchpad sketchpad;
-    private TextView tv_eraser, tv_reset;
+    private TextView tv_eraser, tv_reset, tv_save;
     private RecyclerView rv_sketchpad_color, rv_paint_color, rv_paint_strong;
 
     private List<ColorBean> colorList;
@@ -31,6 +45,8 @@ public class SketchpadActivity extends AppCompatActivity implements View.OnClick
     private List<StrongBean> strongList;
     private PaintColorAndSketchpadColorAdapter paintColorAdapter, sketchpadColorAdapter;
     private PaintStrongAdapter strongAdapter;
+
+    private static final int SDK_PERMISSION_REQUEST = 0x110;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +62,7 @@ public class SketchpadActivity extends AppCompatActivity implements View.OnClick
         sketchpad = (CustomSketchpad) findViewById(R.id.sketchpad);
         tv_eraser = (TextView) findViewById(R.id.tv_eraser);
         tv_reset = (TextView) findViewById(R.id.tv_reset);
+        tv_save = (TextView) findViewById(R.id.tv_save);
         rv_sketchpad_color = (RecyclerView) findViewById(R.id.rv_sketchpad_color);
         rv_paint_color = (RecyclerView) findViewById(R.id.rv_paint_color);
         rv_paint_strong = (RecyclerView) findViewById(R.id.rv_paint_strong);
@@ -54,6 +71,7 @@ public class SketchpadActivity extends AppCompatActivity implements View.OnClick
     private void bindEvent() {
         tv_eraser.setOnClickListener(this);
         tv_reset.setOnClickListener(this);
+        tv_save.setOnClickListener(this);
     }
 
     private void initData() {
@@ -477,7 +495,106 @@ public class SketchpadActivity extends AppCompatActivity implements View.OnClick
             case R.id.tv_reset:   //重置
                 sketchpad.clearCanvas();
                 break;
+            case R.id.tv_save:    //保存到本地
+                getPermission();
+                break;
         }
+    }
+
+    private void getPermission(){
+        boolean isAllGranted = checkPermissionAllGranted(new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+        });
+
+        if (isAllGranted) {
+            saveImageToAlbum();
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ArrayList<String> permissions = new ArrayList<String>();
+            //SD卡写入权限
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            //SD卡读取权限
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            if (permissions.size() > 0) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
+            } else {
+                saveImageToAlbum();
+            }
+        } else {
+            saveImageToAlbum();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        switch (requestCode) {
+            case SDK_PERMISSION_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    saveImageToAlbum();
+                } else {
+                    showMsg("保存失败，请允许所有权限。");
+                }
+        }
+    }
+
+    /**
+     * 检查是否拥有指定的所有权限
+     */
+    protected boolean checkPermissionAllGranted(String[] permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                // 只要有一个权限没有被授予, 则直接返回 false
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void saveImageToAlbum(){
+        Bitmap bitmap = sketchpad.getBitmap();
+        File file = null;
+        try {
+            file = saveImage(bitmap, System.currentTimeMillis() + ".png");
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(file);
+            intent.setData(uri);
+            sendBroadcast(intent);  //这个广播的目的就是更新图库
+            showMsg("保存成功，路径为：" + file.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            showMsg("保存失败，未知错误！");
+        }
+    }
+
+    /**
+     * @param bm
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    protected File saveImage(Bitmap bm, String fileName) throws IOException {
+        String subForder = SDCardPathUtils.getSDPath(this);
+        File foder = new File(subForder);
+        if (!foder.exists()) {
+            foder.mkdirs();
+        }
+        File myCaptureFile = new File(subForder, fileName);
+        if (!myCaptureFile.exists()) {
+            myCaptureFile.createNewFile();
+        }
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+        bm.compress(Bitmap.CompressFormat.PNG, 80, bos);
+        bos.flush();
+        bos.close();
+        return myCaptureFile;
     }
 
     private void showMsg(String msg){

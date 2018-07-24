@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.liyahong.customview.SketchpadActivity">
 
@@ -33,6 +32,17 @@
                 android:gravity="center"
                 android:drawablePadding="2dp"
                 android:drawableStart="@mipmap/eraser"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存到本地"
+                android:gravity="center"
+                android:drawablePadding="2dp"
+                android:layout_gravity="center"
+                android:drawableStart="@mipmap/save"
                 android:textSize="14sp"/>
 
             <TextView
