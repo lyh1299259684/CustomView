@@ -57,7 +57,7 @@ public class CustomBitmapShader extends View{
          *      2.REPEAT 重复，横向、纵向不断重复
          *      3.MIRROR 镜像，横向不断翻转重复，纵向不断翻转重复
          */
-        final BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR);
+        final BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         mPaint.setShader(shader);
     }
 
@@ -81,16 +81,18 @@ public class CustomBitmapShader extends View{
 
         int width, height;
 
+        int min = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         } else {
-            width = getPaddingLeft() + bitmap.getWidth() + getPaddingRight();
+            width = getPaddingLeft() + min + getPaddingRight();
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else {
-            height = getPaddingTop() + bitmap.getHeight() + getPaddingBottom();
+            height = getPaddingTop() + min + getPaddingBottom();
         }
 
         setMeasuredDimension(width, height);
