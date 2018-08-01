@@ -89,19 +89,26 @@
                 android:id="@+id/btn_intent_scrath_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="点击去刮奖"/>
+                android:text="去刮奖"/>
 
             <Button
                 android:id="@+id/btn_intent_drawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="点击去处理图片"/>
+                android:text="去处理图片"/>
 
             <Button
                 android:id="@+id/btn_intent_sketchpad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="点击去签名"/>
+                android:text="去签名"/>
+
+            <Button
+                android:id="@+id/btn_intent_bitmapshader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="BitmapShader学习"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

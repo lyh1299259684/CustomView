@@ -75,4 +75,9 @@
         <attr name="paintColor"/>
         <attr name="paintStrong"/>
     </declare-styleable>
+
+    <!-- Bitmap着色器学习 -->
+    <declare-styleable name="CustomBitmapShader">
+        <attr name="src"/>
+    </declare-styleable>
 </resources>

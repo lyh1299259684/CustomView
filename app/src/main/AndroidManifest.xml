@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.liyahong.customview">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".LightingActivity" />
         <activity android:name=".ScrathViewActivity" />
-        <activity android:name=".SketchpadActivity"></activity>
+        <activity android:name=".SketchpadActivity" />
+        <activity android:name=".BitmapShaderActivity"></activity>
     </application>
 
 </manifest>
